@@ -34,6 +34,6 @@ const jobSchema = new mongoose.Schema({
   Created_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // This is because the person who is going to create the job is also a user at the end
-    required: false,
+    required: true,
   },
 });
