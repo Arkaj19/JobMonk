@@ -1,39 +1,54 @@
 import mongoose, { Mongoose } from "mongoose";
 
-const jobSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const jobSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    requirement: [{ type: String }],
+    salary: {
+      type: Number,
+      required: true,
+    },
+    experienceLevel: {
+      type: Number,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    jobType: {
+      type: String,
+      required: true,
+    },
+    position: {
+      type: Number,
+      required: true,
+    },
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Company",
+      required: true,
+    },
+    created_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // This is because the person who is going to create the job is also a user at the end
+      required: true,
+    },
+    application: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Application",
+      },
+    ],
   },
-  Description: {
-    type: String,
-    required: true,
-  },
-  Requirement: [{ type: String }],
-  Salary: {
-    type: Number,
-    required: true,
-  },
-  Location: {
-    type: String,
-    required: true,
-  },
-  JobType: {
-    type: String,
-    required: true,
-  },
-  Position: {
-    type: Number,
-    required: true,
-  },
-  Company: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Company",
-    required: true,
-  },
-  Created_by: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // This is because the person who is going to create the job is also a user at the end
-    required: true,
-  },
-});
+  { timestamps: true }
+);
+
+export const Job = mongoose.model("Job", jobSchema);

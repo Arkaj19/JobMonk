@@ -1,0 +1,178 @@
+import { User } from "../models/user.model.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+export const register = async (req, res) => {
+  try {
+    // Debug logging
+    // console.log("Register function called");
+    // console.log("req.body:", req.body);
+    // console.log("req.body type:", typeof req.body);
+    const { fullname, email, phone, password, role } = req.body;
+    if (!fullname || !email || !phone || !password || !role) {
+      return res.status(400).json({
+        message: "Something is missing",
+        success: false,
+      });
+    }
+    //Now I want to check the user that is coming to register, it is previously there or not
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({
+        message: "User already exists with this email",
+        success: false,
+      });
+    }
+
+    // Converting the password to hash using bcrypt
+    // 10 denotes the salt as to how long it will be created
+    const hashedpwd = await bcrypt.hash(password, 10);
+
+    await User.create({
+      fullname,
+      email,
+      phone,
+      password: hashedpwd,
+      role,
+    });
+
+    return res.status(201).json({
+      message: "Account Created Successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, password, role } = req.body;
+    if (!email || !password || !role) {
+      return res.status(400).json({
+        message: "Something is missing",
+        success: false,
+      });
+    }
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        message: "Incorrect Email Id or Password",
+        success: false,
+      });
+    }
+
+    const isPwdMatch = await bcrypt.compare(password, user.password);
+    if (!isPwdMatch) {
+      return res.status(400).json({
+        message: "Incorrect Email Id or Password",
+        success: false,
+      });
+    }
+    // Check role is correct or not
+    if (role != user.role) {
+      return res.status(400).json({
+        message: "Account doesn't exist with current role",
+        success: false,
+      });
+    }
+
+    const tokenData = {
+      userId: user._id,
+    };
+
+    const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
+      expiresIn: "1d",
+    });
+
+    user = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      profile: user.profile,
+    };
+
+    return res
+      .status(200)
+      .cookie("token", token, {
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+        httpsOnly: true,
+        sameSite: "Strict",
+      })
+      .json({
+        message: `Welcome back ${user.fullname}`,
+        success: true,
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+      message: "Logged Out Successfully.",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { fullname, email, phone, bio, skills } = req.body;
+    const file = req.file;
+    // if (!fullname || !email || !phone || !bio || !skills) {
+    //   return res.status(400).json({
+    //     message: "Something is missing",
+    //     success: false,
+    //   });
+    // }
+
+    // Cloudinary comes here later
+    let skillsArray;
+    if (skills) {
+      skillsArray = skills.split(",");
+    }
+
+    // we need to authenticate a profile before allowing any updation on it
+    const userId = req.id; // Comes from middleware Authentication
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User Not Found",
+        success: false,
+      });
+    }
+
+    // Updating Data
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phone) user.phone = phone;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skillsArray;
+
+    // Resume comes here later after Cloudinary setup.......
+
+    await user.save();
+
+    user = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      profile: user.profile,
+    };
+
+    return res.status(200).json({
+      message: "Profile Updated Successfully",
+      user,
+      success: true,
+    });
+  } catch (error) {}
+};
