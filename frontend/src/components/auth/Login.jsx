@@ -412,8 +412,6 @@ const Login = () => {
                 Sign In
               </Button>
             )}
-
-            {/* Forgot Password Link */}
             <div className="text-center mt-4">
               <Link
                 to="/forgot-password"

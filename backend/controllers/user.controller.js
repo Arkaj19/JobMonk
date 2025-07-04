@@ -125,13 +125,8 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phone, bio, skills } = req.body;
+    console.log(fullname, email, phone, bio, skills);
     const file = req.file;
-    // if (!fullname || !email || !phone || !bio || !skills) {
-    //   return res.status(400).json({
-    //     message: "Something is missing",
-    //     success: false,
-    //   });
-    // }
 
     // Cloudinary comes here later
     let skillsArray;
@@ -175,5 +170,11 @@ export const updateProfile = async (req, res) => {
       user,
       success: true,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error("Update profile error:", error);
+    return res.status(500).json({
+      message: error.message || "Internal server error",
+      success: false,
+    });
+  }
 };

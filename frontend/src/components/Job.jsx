@@ -4,8 +4,11 @@ import { Bookmark } from "lucide-react";
 import { Avatar } from "./ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Badge } from "./ui/badge";
+import { useNavigate } from "react-router-dom";
 
 const Job = () => {
+  const Navigate = useNavigate();
+  const JobId = "dwfwfefeafeaf";
   return (
     <div className="group p-6 rounded-xl shadow-lg bg-white border border-gray-100 hover:shadow-2xl hover:border-gray-200 transition-all duration-300 cursor-pointer relative overflow-hidden">
       {/* Subtle gradient overlay */}
@@ -85,11 +88,12 @@ const Job = () => {
         <div className="flex items-center gap-4 mt-6 pt-4 border-t border-gray-100">
           <Button
             variant="outline"
-            className="hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 font-medium"
+            onClick={() => Navigate(`/description/${JobId}`)}
+            className="hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 font-medium cursor-pointer"
           >
             Details
           </Button>
-          <Button className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 font-semibold">
+          <Button className="bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 font-semibold cursor-pointer">
             Save For Later
           </Button>
         </div>
