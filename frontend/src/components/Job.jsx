@@ -6,8 +6,16 @@ import { AvatarImage } from "@radix-ui/react-avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
 
-const Job = () => {
+const Job = ({ job }) => {
   const Navigate = useNavigate();
+
+  const daysAgofn = (mongodbTime) => {
+    const createdAt = new Date(mongodbTime);
+    const currenttime = new Date();
+    const difference = currenttime - createdAt;
+    return Math.floor(difference / (1000 * 24 * 60 * 60));
+  };
+
   const JobId = "dwfwfefeafeaf";
   return (
     <div className="group p-6 rounded-xl shadow-lg bg-white border border-gray-100 hover:shadow-2xl hover:border-gray-200 transition-all duration-300 cursor-pointer relative overflow-hidden">
@@ -18,7 +26,9 @@ const Job = () => {
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm text-gray-500 font-medium flex items-center">
             <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-            2 Days Ago
+            {daysAgofn(job?.createdAt) == 0
+              ? "Today"
+              : `${daysAgofn(job?.createdAt)} days ago`}
           </p>
           <Button
             variant="outline"
@@ -44,7 +54,7 @@ const Job = () => {
           </Button>
           <div>
             <h1 className="font-semibold text-lg text-gray-900 group-hover:text-blue-700 transition-colors duration-200">
-              Company Name
+              {job?.company?.name}
             </h1>
             <p className="text-sm text-gray-500 font-medium flex items-center">
               <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2"></span>
@@ -55,12 +65,10 @@ const Job = () => {
 
         <div className="mb-6">
           <h1 className="font-bold text-xl text-gray-900 my-3 leading-tight group-hover:text-blue-700 transition-colors duration-200">
-            Title
+            {job?.title}
           </h1>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti
-            ullam beatae distinctio eligendi explicabo aut vitae non, sit ut
-            minima.
+            {job?.description}
           </p>
         </div>
 
@@ -69,26 +77,26 @@ const Job = () => {
             className="bg-blue-600 text-white font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200 border border-blue-600 px-3 py-1.5 rounded-full"
             variant="ghost"
           >
-            12 Positions
+            {job?.position} Positions
           </Badge>
           <Badge
             className="bg-teal-600 text-white font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200 border border-teal-600 px-3 py-1.5 rounded-full"
             variant="ghost"
           >
-            Full Time
+            {job?.jobType}
           </Badge>
           <Badge
             className="bg-indigo-700 text-white font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-200 border border-indigo-700 px-3 py-1.5 rounded-full"
             variant="ghost"
           >
-            15 LPA
+            {job?.salary} LPA
           </Badge>
         </div>
 
         <div className="flex items-center gap-4 mt-6 pt-4 border-t border-gray-100">
           <Button
             variant="outline"
-            onClick={() => Navigate(`/description/${JobId}`)}
+            onClick={() => Navigate(`/description/${job?._id}`)}
             className="hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 font-medium cursor-pointer"
           >
             Details

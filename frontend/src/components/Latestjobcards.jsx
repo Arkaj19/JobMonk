@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 
-const Latestjobcards = () => {
+const Latestjobcards = ({ job }) => {
   return (
     <div className="group p-6 rounded-xl shadow-lg bg-white border border-gray-100 hover:shadow-2xl hover:border-gray-200 transition-all duration-300 cursor-pointer relative overflow-hidden">
       {/* Subtle gradient overlay */}
@@ -10,19 +10,19 @@ const Latestjobcards = () => {
       <div className="relative z-10">
         <div className="mb-4">
           <h1 className="font-semibold text-xl text-gray-900 tracking-tight">
-            Company Name
+            {job?.company?.name}
           </h1>
           <p className="text-sm text-gray-500 font-medium mt-1 flex items-center">
             <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-            India
+            {job?.location}
           </p>
         </div>
         <div className="mb-6">
           <h1 className="font-bold text-xl text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors duration-200 my-2">
-            Job Title
+            {job?.title}
           </h1>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            {job?.description}
           </p>
         </div>
         <div className="flex items-center gap-3 mt-4 flex-wrap">
@@ -30,19 +30,19 @@ const Latestjobcards = () => {
             className="bg-blue-600 text-white font-semibold shadow-sm hover:shadow-md transition-shadow duration-200 border border-blue-600 px-3 py-1 rounded-full"
             variant="ghost"
           >
-            12 Positions
+            {job?.position} Positions
           </Badge>
           <Badge
             className="bg-teal-600 text-white font-semibold shadow-sm hover:shadow-md transition-shadow duration-200 border border-teal-600 px-3 py-1 rounded-full"
             variant="ghost"
           >
-            Full Time
+            {job?.jobType}
           </Badge>
           <Badge
             className="bg-indigo-700 text-white font-semibold shadow-sm hover:shadow-md transition-shadow duration-200 border border-indigo-700 px-3 py-1 rounded-full"
             variant="ghost"
           >
-            15 LPA
+            {job?.salary} LPA
           </Badge>
         </div>
       </div>

@@ -1,13 +1,11 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
-    // Debug logging
-    // console.log("Register function called");
-    // console.log("req.body:", req.body);
-    // console.log("req.body type:", typeof req.body);
     const { fullname, email, phone, password, role } = req.body;
     if (!fullname || !email || !phone || !password || !role) {
       return res.status(400).json({
@@ -15,6 +13,17 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+
+    let ProfilePhoto = "";
+    if (req.file) {
+      const fileUri = getDataUri(req.file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      ProfilePhoto = cloudResponse.secure_url;
+    }
+    // const file = req.file;
+    // const fileUri = getDataUri(file);
+    // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
     //Now I want to check the user that is coming to register, it is previously there or not
     const user = await User.findOne({ email });
     if (user) {
@@ -34,6 +43,10 @@ export const register = async (req, res) => {
       phone,
       password: hashedpwd,
       role,
+      profile: {
+        ProfilePhoto,
+        // ProfilePhoto: cloudResponse.secure_url,
+      },
     });
 
     return res.status(201).json({
@@ -125,10 +138,17 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phone, bio, skills } = req.body;
-    console.log(fullname, email, phone, bio, skills);
     const file = req.file;
 
-    // Cloudinary comes here later
+    let cloudResponse;
+    if (file) {
+      const fileUri = getDataUri(file);
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    }
+
+    // const fileUri = getDataUri(file);
+    // const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
     let skillsArray;
     if (skills) {
       skillsArray = skills.split(",");
@@ -153,6 +173,10 @@ export const updateProfile = async (req, res) => {
     if (skills) user.profile.skills = skillsArray;
 
     // Resume comes here later after Cloudinary setup.......
+    if (file && cloudResponse) {
+      user.profile.resume = cloudResponse.secure_url; // Save the cloudinary url
+      user.profile.resumeOriginalName = file.originalname; //Save the original file name
+    }
 
     await user.save();
 

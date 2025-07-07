@@ -3,12 +3,34 @@ import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { LogOut, User2 } from "lucide-react";
-import { Link, Links } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, Links, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_API_END_POINT } from "@/utils/constants";
+import { setUser } from "@/redux/authSlice";
+import { toast } from "sonner";
+import axios from "axios";
 
 const Navbar = () => {
   // const user = false;
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
   return (
     <div className="bg-gradient-to-r from-sky-50 via-white to-blue-50 border-b border-sky-100">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
@@ -22,16 +44,28 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5 text-gray-700">
-            {/* <li><Link>Home</Link></li> */}
-            <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
-              <Link to="/jobs">Jobs</Link>
-            </li>
-            <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
-              <Link to="/browse">Browse</Link>
-            </li>
+            {user && user.role === "recruiter" ? (
+              <>
+                <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
+                  <Link to="/">Home</Link>
+                </li>
+                <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
+                  <Link to="/browse">Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
@@ -55,7 +89,7 @@ const Navbar = () => {
                 {/* <Button variant="outline">Open Popover</Button> */}
                 <Avatar className="cursor-pointer ring-2 ring-sky-200 hover:ring-sky-300 transition-all duration-200">
                   <AvatarImage
-                    src="https://github.com/shadcn.png"
+                    src={user?.profile?.ProfilePhoto}
                     alt="@shadcn"
                   />
                 </Avatar>
@@ -64,28 +98,36 @@ const Navbar = () => {
                 <div className="flex gap-4 space-y-2">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src="https://github.com/shadcn.png"
+                      src={user?.profile?.ProfilePhoto}
                       alt="@shadcn"
                     />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium text-gray-800">Arkajyoti</h4>
-                    <p className="text-sm text-gray-600">Lorem Ipsum dolor</p>
+                    <h4 className="font-medium text-gray-800">
+                      {user?.fullname}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {user?.profile?.bio}
+                    </p>
                   </div>
                 </div>
                 <div className="flex flex-col my-2 text-gray-600">
-                  <div className="flex w-fit items-center gap-2 cursor-pointer hover:text-sky-600 transition-colors duration-200">
-                    <User2></User2>
-                    <Button
-                      variant="link"
-                      className="text-gray-600 hover:text-sky-600"
-                    >
-                      <Link to="/profile">View Profile</Link>
-                    </Button>
-                  </div>
+                  {user && user.role === "student" && (
+                    <div className="flex w-fit items-center gap-2 cursor-pointer hover:text-sky-600 transition-colors duration-200">
+                      <User2></User2>
+                      <Button
+                        variant="link"  
+                        className="text-gray-600 hover:text-sky-600"
+                      >
+                        <Link to="/profile">View Profile</Link>
+                      </Button>
+                    </div>
+                  )}
+
                   <div className="flex w-fit items-center gap-2 cursor-pointer hover:text-sky-600 transition-colors duration-200">
                     <LogOut></LogOut>
                     <Button
+                      onClick={logoutHandler}
                       variant="link"
                       className="text-gray-600 hover:text-sky-600"
                     >

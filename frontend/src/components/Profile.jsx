@@ -90,12 +90,14 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobstables from "./AppliedJobstables";
 import UpdateProfileDialog from "./UpdateProfileDialog";
+import { useSelector } from "react-redux";
 
 const skills = ["HTML", "JavaScript", "MongoDB", "ExpressJS", "ReactJS"];
 
 const Profile = () => {
   const isResume = true;
   const [open, setOpen] = useState(false);
+  const { user } = useSelector((store) => store.auth);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
@@ -105,18 +107,18 @@ const Profile = () => {
           <div className="flex items-center gap-6">
             <Avatar className="h-28 w-28 ring-4 ring-blue-100 shadow-lg">
               <AvatarImage
-                src="https://e7.pngegg.com/pngimages/56/318/png-clipart-google-logo-logo-logo-company-text.png"
+                // src="https://e7.pngegg.com/pngimages/56/318/png-clipart-google-logo-logo-logo-company-text.png"
+                src={user?.profile?.ProfilePhoto}
                 alt="image"
                 className="object-cover"
               />
             </Avatar>
             <div className="space-y-2">
               <h1 className="font-bold text-2xl text-gray-800 tracking-tight">
-                Full Name
+                {user?.fullname}
               </h1>
               <p className="text-gray-600 leading-relaxed max-w-md">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-                neque dignissimos est
+                {user?.profile.bio}
               </p>
             </div>
           </div>
@@ -132,11 +134,11 @@ const Profile = () => {
         <div className="my-8 space-y-4">
           <div className="flex items-center gap-4 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
             <Mail className="h-5 w-5 text-blue-600" />
-            <span className="text-gray-700 font-medium">Kunal@gmail.com</span>
+            <span className="text-gray-700 font-medium">{user?.email}</span>
           </div>
           <div className="flex items-center gap-4 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
             <Contact className="h-5 w-5 text-green-600" />
-            <span className="text-gray-700 font-medium">9865456646</span>
+            <span className="text-gray-700 font-medium">{user?.phone}</span>
           </div>
         </div>
 
@@ -145,8 +147,8 @@ const Profile = () => {
             Skills
           </h1>
           <div className="flex items-center gap-2 flex-wrap">
-            {skills.length != 0 ? (
-              skills.map((item, index) => (
+            {user?.profile?.skills.length != 0 ? (
+              user?.profile?.skills.map((item, index) => (
                 <Badge
                   key={index}
                   className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors duration-200 px-3 py-1 text-sm font-medium"
@@ -167,10 +169,10 @@ const Profile = () => {
           {isResume ? (
             <a
               target="blank"
-              href="https://about.google/company-info/"
+              href={user?.profile?.resume}
               className="text-blue-600 font-medium hover:text-blue-800 hover:underline cursor-pointer transition-colors duration-200 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100"
             >
-              📄 View Resume
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span className="text-gray-500 italic">N/A</span>

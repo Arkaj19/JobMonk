@@ -42,7 +42,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     const formData = new FormData();
     formData.append("fullname", input.fullname);
@@ -55,6 +55,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
 
     try {
+      setLoading(true);
       const res = await axios.post(
         `${USER_API_END_POINT}/profile/update`,
         formData,
