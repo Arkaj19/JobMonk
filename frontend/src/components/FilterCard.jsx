@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { setSearchedQuery } from "@/redux/jobSlice";
+import { useDispatch } from "react-redux";
 
 const filterData = [
   {
     filterType: "Location",
-    array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai"],
+    array: ["Delhi NCR", "Bangalore", "Hyderabad", "Pune", "Mumbai", "Kolkata"],
   },
   {
     filterType: "Industry",
@@ -18,12 +20,24 @@ const filterData = [
 ];
 
 const FilterCard = () => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const dispatch = useDispatch();
+  const changeHandler = (value) => {
+    setSelectedValue(value);
+  };
+  useEffect(() => {
+    dispatch(setSearchedQuery(selectedValue));
+  }, [selectedValue]);
   return (
     <div className="w-full bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 sticky top-4">
       <h1 className="font-bold text-xl text-gray-900 mb-1">Filter Jobs</h1>
       <p className="text-sm text-gray-500 mb-4">Find your perfect match</p>
       <hr className="mt-4 mb-6 border-gray-200" />
-      <RadioGroup className="space-y-6">
+      <RadioGroup
+        value={selectedValue}
+        onValueChange={changeHandler}
+        className="space-y-6"
+      >
         {filterData.map((data, index) => (
           <div key={index} className="space-y-4">
             <h1 className="font-bold text-lg text-gray-800 flex items-center">
@@ -32,6 +46,7 @@ const FilterCard = () => {
             </h1>
             <div className="pl-4 space-y-3">
               {data.array.map((item, itemIndex) => {
+                const itemId = `id${index}-${itemIndex}`;
                 return (
                   <div
                     key={itemIndex}
@@ -39,9 +54,13 @@ const FilterCard = () => {
                   >
                     <RadioGroupItem
                       value={item}
+                      id={itemId}
                       className="border-2 border-gray-300 text-blue-600 focus:ring-blue-500 hover:border-blue-400 transition-colors duration-200"
                     />
-                    <Label className="text-gray-700 font-medium cursor-pointer group-hover:text-gray-900 transition-colors duration-200 text-sm">
+                    <Label
+                      htnlFor={itemId}
+                      className="text-gray-700 font-medium cursor-pointer group-hover:text-gray-900 transition-colors duration-200 text-sm"
+                    >
                       {item}
                     </Label>
                   </div>

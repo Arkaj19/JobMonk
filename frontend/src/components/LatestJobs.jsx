@@ -2,7 +2,6 @@ import React from "react";
 import Latestjobcards from "./Latestjobcards";
 import { useSelector } from "react-redux";
 
-// const randomJobs = [1, 2, 3, 4, 5, 6, 7, 8];
 const LatestJobs = () => {
   const { allJobs } = useSelector((store) => store.job);
   return (
@@ -15,7 +14,7 @@ const LatestJobs = () => {
           <span>No Job Available</span>
         ) : (
           allJobs
-            ?.slice(0, 6)
+            ?.slice(0, 3)
             .map((job) => <Latestjobcards key={job._id} job={job} />)
         )}
       </div>

@@ -58,7 +58,7 @@ export const postjob = async (req, res) => {
 //student
 export const getAllJobs = async (req, res) => {
   try {
-    const keyword = req.query.filter || "";
+    const keyword = req.query.keyword || "";
     const query = {
       $or: [
         { title: { $regex: keyword, $options: "i" } },
@@ -81,7 +81,9 @@ export const getAllJobs = async (req, res) => {
       jobs,
       success: true,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //student
@@ -110,7 +112,10 @@ export const getjobsbyId = async (req, res) => {
 export const getAdminjobs = async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ created_by: adminId });
+    const jobs = await Job.find({ created_by: adminId }).populate({
+      path: "company",
+      createdAt: -1,
+    });
     if (!jobs) {
       return res.status(404).json({
         message: "Jobs not found",

@@ -1,20 +1,22 @@
 import { Company } from "../models/company.model.js";
+import cloudinary from "../utils/cloudinary.js";
+import getDataUri from "../utils/dataUri.js";
 // First we need to register a company
 export const registerCompany = async (req, res) => {
   try {
-    const { companyName, description } = req.body;
+    const { companyName } = req.body;
     if (!companyName) {
       return res.status(400).json({
         message: "Company name is required",
         success: false,
       });
 
-      if (!description) {
-        return res.status(400).json({
-          message: "Company description is required",
-          success: false,
-        });
-      }
+      // if (!description) {
+      //   return res.status(400).json({
+      //     message: "Company description is required",
+      //     success: false,
+      //   });
+      // }
     }
     let company = await Company.findOne({ name: companyName });
     // checking
@@ -26,7 +28,6 @@ export const registerCompany = async (req, res) => {
     }
     company = await Company.create({
       name: companyName,
-      description: description,
       userId: req.id,
     });
 
@@ -55,7 +56,7 @@ export const getCompany = async (req, res) => {
       companies,
       success: true,
     });
-  } catch (error) { 
+  } catch (error) {
     console.log(error);
   }
 };
@@ -83,10 +84,16 @@ export const getCompanyById = async (req, res) => {
 export const updateCompany = async (req, res) => {
   try {
     const { name, description, website, location } = req.body;
+    // console.log(name, description, website, location);
     const file = req.file;
     //idhar cloudinary aayega
+    // if (req.file) {
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    const logo = cloudResponse.secure_url;
+    // }
 
-    const updateData = { name, description, website, location };
+    const updateData = { name, description, website, location, logo };
 
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,

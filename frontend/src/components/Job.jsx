@@ -47,7 +47,7 @@ const Job = ({ job }) => {
           >
             <Avatar className="w-8 h-8">
               <AvatarImage
-                src="https://e7.pngegg.com/pngimages/56/318/png-clipart-google-logo-logo-logo-company-text.png"
+                src={job?.company?.logo}
                 className="object-contain"
               />
             </Avatar>

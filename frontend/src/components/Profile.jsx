@@ -91,10 +91,12 @@ import { Label } from "./ui/label";
 import AppliedJobstables from "./AppliedJobstables";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 const skills = ["HTML", "JavaScript", "MongoDB", "ExpressJS", "ReactJS"];
 
 const Profile = () => {
+  useGetAppliedJobs();
   const isResume = true;
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
@@ -107,7 +109,6 @@ const Profile = () => {
           <div className="flex items-center gap-6">
             <Avatar className="h-28 w-28 ring-4 ring-blue-100 shadow-lg">
               <AvatarImage
-                // src="https://e7.pngegg.com/pngimages/56/318/png-clipart-google-logo-logo-logo-company-text.png"
                 src={user?.profile?.ProfilePhoto}
                 alt="image"
                 className="object-cover"
