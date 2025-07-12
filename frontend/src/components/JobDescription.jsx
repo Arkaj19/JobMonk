@@ -109,7 +109,7 @@ const JobDescription = () => {
               : "bg-[#7209b7] hover:bg-[#5f32ad] text-white shadow-md hover:shadow-lg"
           }`}
         >
-          {isApplied ? "Already Applied" : "Apply Now"}
+          {isApplied ? "Applied" : "Apply Now"}
         </Button>
       </div>
       <h1 className="border-b-2 border-b-gray-300 font-semibold py-4 text-xl text-gray-800">

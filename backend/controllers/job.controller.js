@@ -1,3 +1,4 @@
+import { Application } from "../models/application.model.js"; // version 1.2
 import { Job } from "../models/job.model.js";
 
 //student
@@ -128,5 +129,49 @@ export const getAdminjobs = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+//version 1.2
+
+// Delete job and all associated applications
+export const deleteJob = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const userId = req.id; // From auth middleware
+
+    // Find the job and verify ownership
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(404).json({
+        message: "Job not found",
+        success: false,
+      });
+    }
+
+    // Check if the user is the creator of the job
+    if (job.created_by.toString() !== userId.toString()) {
+      return res.status(403).json({
+        message: "You don't have permission to delete this job",
+        success: false,
+      });
+    }
+
+    // Delete all applications associated with this job
+    await Application.deleteMany({ job: jobId });
+
+    // Delete the job itself
+    await Job.findByIdAndDelete(jobId);
+
+    return res.status(200).json({
+      message: "Job and all associated applications deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log("Error deleting job:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };

@@ -13,8 +13,6 @@ import CompanySetup from "./components/admin/CompanySetup";
 import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from "./components/admin/PostJob";
 import Applicants from "./components/admin/Applicants";
-import LoadingScreen from "./components/LoadingScreen";
-import { useEffect, useState } from "react";
 const appRouter = createBrowserRouter([
   {
     path: "/",

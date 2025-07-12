@@ -181,9 +181,7 @@ const CompanySetup = () => {
                     <div className="flex items-center gap-3">
                       <Upload size={20} className="text-gray-500" />
                       <span className="text-gray-600 font-medium">
-                        {input.file
-                          ? input.file.name
-                          : "Choose file or drag and drop"}
+                        {input.file ? input.file.name : "Choose file"}
                       </span>
                     </div>
                   </label>

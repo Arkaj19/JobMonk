@@ -35,12 +35,14 @@ const Navbar = () => {
     <div className="bg-gradient-to-r from-sky-50 via-white to-blue-50 border-b border-sky-100">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div>
-          <h1 className="text-2xl font-bold">
-            Job
-            <span className="bg-gradient-to-r from-sky-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
-              Monk
-            </span>
-          </h1>
+          <Link to="/">
+            <h1 className="text-2xl font-bold cursor-pointer hover:opacity-80 transition-opacity duration-200">
+              Job
+              <span className="bg-gradient-to-r from-sky-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                Monk
+              </span>
+            </h1>
+          </Link>
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5 text-gray-700">
@@ -61,9 +63,9 @@ const Navbar = () => {
                 <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
                   <Link to="/jobs">Jobs</Link>
                 </li>
-                <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
+                {/* <li className="hover:text-sky-600 transition-colors duration-200 cursor-pointer">
                   <Link to="/browse">Browse</Link>
-                </li>
+                </li> */}
               </>
             )}
           </ul>

@@ -1,6 +1,8 @@
 import { Company } from "../models/company.model.js";
 import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/dataUri.js";
+import { Job } from "../models/job.model.js";
+import { Application } from "../models/application.model.js";
 // First we need to register a company
 export const registerCompany = async (req, res) => {
   try {
@@ -112,5 +114,57 @@ export const updateCompany = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+//Version 1.2
+
+// Delete company and all associated jobs and applications
+export const deleteCompany = async (req, res) => {
+  try {
+    const companyId = req.params.id;
+    const userId = req.id; // From auth middleware
+
+    // Find the company and verify ownership
+    const company = await Company.findById(companyId);
+    if (!company) {
+      return res.status(404).json({
+        message: "Company not found",
+        success: false,
+      });
+    }
+
+    // Check if the user is the owner of the company
+    if (company.userId.toString() !== userId.toString()) {
+      return res.status(403).json({
+        message: "You don't have permission to delete this company",
+        success: false,
+      });
+    }
+
+    // Find all jobs associated with this company
+    const jobs = await Job.find({ company: companyId });
+
+    // Delete all applications for all jobs of this company
+    for (const job of jobs) {
+      await Application.deleteMany({ job: job._id });
+    }
+
+    // Delete all jobs associated with this company
+    await Job.deleteMany({ company: companyId });
+
+    // Delete the company itself
+    await Company.findByIdAndDelete(companyId);
+
+    return res.status(200).json({
+      message: "Company and all associated data deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log("Error deleting company:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };

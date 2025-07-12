@@ -18,9 +18,19 @@ const companySlice = createSlice({
     setsearchCompanyByText: (state, action) => {
       state.searchCompanyByText = action.payload;
     },
+    // Add this action to your reducers // Version 1.2
+    deleteCompany: (state, action) => {
+      state.companies = state.companies.filter(
+        (company) => company._id !== action.payload
+      );
+    },
   },
 });
 
-export const { setCompanies, setSingleCompany, setsearchCompanyByText } =
-  companySlice.actions;
+export const {
+  setCompanies,
+  setSingleCompany,
+  setsearchCompanyByText,
+  deleteCompany, // version 1.2
+} = companySlice.actions;
 export default companySlice.reducer;
