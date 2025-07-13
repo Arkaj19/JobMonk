@@ -67,14 +67,15 @@ import { useNavigate } from "react-router-dom";
 import { setSearchedQuery } from "@/redux/jobSlice";
 
 const category = [
-  "Frontend Developer",
-  "Backend Developer",
-  "Data Science",
-  "Graphic Designer",
+  "ABAP Developer",
+  "Android Developer",
+  "Data Scientist",
+  "ML Engineer",
   "FullStack Developer",
-  "Frontend Developer", // Duplicate for seamless loop
-  "Backend Developer",
-  "Data Science",
+  "SDE II", // Duplicate for seamless loop
+  "Backend Engineer",
+  "iOS Developer",
+  "Security Engineer",
 ];
 
 const CategoryCarousel = () => {
