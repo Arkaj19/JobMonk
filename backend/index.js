@@ -27,7 +27,8 @@ app.get("/home", (req, res) => {
 });
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  // origin: "http://localhost:5173",
+  origin: "https://jobmonk.onrender.com", // Attached deployed link
   credentials: true,
 };
 
