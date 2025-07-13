@@ -86,22 +86,22 @@ const Browse = () => {
   const allJobs = useSelector((state) => state.job.allJobs || []);
 
   useEffect(() => {
-    console.log("Browse component mounted");
-    console.log("Current searchedQuery from Redux:", searchedQuery);
-    console.log("Navigation state:", location.state);
+    // console.log("Browse component mounted");
+    // console.log("Current searchedQuery from Redux:", searchedQuery);
+    // console.log("Navigation state:", location.state);
 
     // If there's a search query in navigation state and Redux is empty, use it
     if (location.state?.searchQuery && !searchedQuery) {
-      console.log(
-        "Setting searchedQuery from navigation state:",
-        location.state.searchQuery
-      );
+      // console.log(
+      //   "Setting searchedQuery from navigation state:",
+      //   location.state.searchQuery
+      // );
       dispatch(setSearchedQuery(location.state.searchQuery));
     }
   }, [location.state, searchedQuery, dispatch]);
 
   useEffect(() => {
-    console.log("searchedQuery changed in Browse:", searchedQuery);
+    // console.log("searchedQuery changed in Browse:", searchedQuery);
   }, [searchedQuery]);
 
   // Filter jobs based on searchedQuery

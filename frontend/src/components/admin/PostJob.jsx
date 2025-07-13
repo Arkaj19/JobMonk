@@ -712,7 +712,7 @@ const PostJob = () => {
               {/* Salary */}
               <div>
                 <Label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Salary Range <span className="text-red-500">*</span>
+                  Salary <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   type="text"

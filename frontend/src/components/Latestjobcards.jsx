@@ -63,6 +63,8 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
+import { Avatar, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 
 const Latestjobcards = ({ job }) => {
   const navigate = useNavigate();
@@ -75,15 +77,31 @@ const Latestjobcards = ({ job }) => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 to-indigo-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
       <div className="relative z-10">
-        <div className="mb-4">
-          <h1 className="font-semibold text-xl text-gray-900 tracking-tight">
-            {job?.company?.name}
-          </h1>
-          <p className="text-sm text-gray-500 font-medium mt-1 flex items-center">
-            <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-            {job?.location}
-          </p>
+        {/* Logo and Company Name in Flex */}
+        <div className="mb-4 flex items-center gap-3">
+          <Button
+            className="p-3 hover:scale-105 transition-transform duration-200 shadow-md hover:shadow-lg"
+            variant="outline"
+            size="icon"
+          >
+            <Avatar className="w-8 h-8">
+              <AvatarImage
+                src={job?.company?.logo}
+                className="object-contain"
+              />
+            </Avatar>
+          </Button>
+          <div>
+            <h1 className="font-semibold text-xl text-gray-900 tracking-tight">
+              {job?.company?.name}
+            </h1>
+            <p className="text-sm text-gray-500 font-medium mt-1 flex items-center">
+              <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+              {job?.location}
+            </p>
+          </div>
         </div>
+
         <div className="mb-6">
           <h1 className="font-bold text-xl text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors duration-200 my-2">
             {job?.title}

@@ -19,7 +19,6 @@
 //   Upload,
 //   UserCheck,
 //   Users,
-//   Sparkles,
 // } from "lucide-react";
 
 // const Signup = () => {
@@ -74,25 +73,14 @@
 //   };
 
 //   return (
-//     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50">
+//     <div className="min-h-screen bg-gray-50 overflow-x-hidden">
 //       <Navbar />
-
-//       {/* Background Effects */}
-//       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//         <div className="absolute top-20 left-10 w-40 h-40 bg-sky-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-//         <div className="absolute top-40 right-20 w-60 h-60 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-1000"></div>
-//         <div className="absolute bottom-20 left-1/4 w-48 h-48 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-500"></div>
-//       </div>
 
 //       <div className="relative flex items-center justify-center max-w-7xl mx-auto px-4 py-8">
 //         <div className="w-full max-w-md">
 //           {/* Header */}
 //           <div className="text-center mb-8">
-//             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-sky-100 to-blue-100 text-sky-700 rounded-full text-sm font-medium mb-4">
-//               <Sparkles className="h-4 w-4" />
-//               Join Our Community
-//             </div>
-//             <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-sky-900 to-gray-900 bg-clip-text text-transparent mb-2">
+//             <h1 className="text-3xl font-bold text-gray-900 mb-2">
 //               Create Your Account
 //             </h1>
 //             <p className="text-gray-600">
@@ -103,91 +91,83 @@
 //           {/* Form */}
 //           <form
 //             onSubmit={submitHandler}
-//             className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300"
+//             className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm"
 //           >
 //             {/* Full Name */}
 //             <div className="mb-6">
-//               <Label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-//                 <User className="h-4 w-4 text-sky-600" />
+//               <Label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+//                 <User className="h-4 w-4 text-gray-500" />
 //                 Full Name
 //               </Label>
-//               <div className="relative">
-//                 <Input
-//                   type="text"
-//                   value={input.fullname}
-//                   name="fullname"
-//                   onChange={changeEventHandler}
-//                   placeholder="Enter your full name"
-//                   className="pl-4 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all duration-200 bg-white/90"
-//                 />
-//               </div>
+//               <Input
+//                 type="text"
+//                 value={input.fullname}
+//                 name="fullname"
+//                 onChange={changeEventHandler}
+//                 placeholder="Enter your full name"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//               />
 //             </div>
 
 //             {/* Email */}
 //             <div className="mb-6">
-//               <Label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-//                 <Mail className="h-4 w-4 text-sky-600" />
+//               <Label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+//                 <Mail className="h-4 w-4 text-gray-500" />
 //                 Email Address
 //               </Label>
-//               <div className="relative">
-//                 <Input
-//                   type="email"
-//                   value={input.email}
-//                   name="email"
-//                   onChange={changeEventHandler}
-//                   placeholder="Enter your email"
-//                   className="pl-4 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all duration-200 bg-white/90"
-//                 />
-//               </div>
+//               <Input
+//                 type="email"
+//                 value={input.email}
+//                 name="email"
+//                 onChange={changeEventHandler}
+//                 placeholder="Enter your email"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//               />
 //             </div>
 
 //             {/* Phone */}
 //             <div className="mb-6">
-//               <Label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-//                 <Phone className="h-4 w-4 text-sky-600" />
+//               <Label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+//                 <Phone className="h-4 w-4 text-gray-500" />
 //                 Phone Number
 //               </Label>
-//               <div className="relative">
-//                 <Input
-//                   type="text"
-//                   value={input.phone}
-//                   name="phone"
-//                   onChange={changeEventHandler}
-//                   placeholder="Enter your phone number"
-//                   className="pl-4 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all duration-200 bg-white/90"
-//                 />
-//               </div>
+//               <Input
+//                 type="text"
+//                 value={input.phone}
+//                 name="phone"
+//                 onChange={changeEventHandler}
+//                 placeholder="Enter your phone number"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//               />
 //             </div>
 
 //             {/* Password */}
 //             <div className="mb-6">
-//               <Label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-//                 <Lock className="h-4 w-4 text-sky-600" />
+//               <Label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+//                 <Lock className="h-4 w-4 text-gray-500" />
 //                 Password
 //               </Label>
-//               <div className="relative">
-//                 <Input
-//                   type="password"
-//                   value={input.password}
-//                   name="password"
-//                   onChange={changeEventHandler}
-//                   placeholder="Create a strong password"
-//                   className="pl-4 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition-all duration-200 bg-white/90"
-//                 />
-//               </div>
+//               <Input
+//                 type="password"
+//                 value={input.password}
+//                 name="password"
+//                 onChange={changeEventHandler}
+//                 placeholder="Create a strong password"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//               />
 //             </div>
 
 //             {/* Role Selection */}
 //             <div className="mb-6">
-//               <Label className="text-sm font-semibold text-gray-700 mb-3 block">
+//               <Label className="text-sm font-medium text-gray-700 mb-3 block">
 //                 I'm looking to:
 //               </Label>
 //               <RadioGroup className="grid grid-cols-2 gap-3">
 //                 <div
-//                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
+//                   className={`border rounded-lg p-4 cursor-pointer transition-colors ${
 //                     input.role === "candidate"
-//                       ? "border-sky-400 bg-sky-50"
-//                       : "border-gray-200 hover:border-sky-300 bg-white/50"
+//                       ? "border-blue-500 bg-blue-50"
+//                       : "border-gray-200 hover:border-gray-300"
 //                   }`}
 //                 >
 //                   <Input
@@ -199,7 +179,7 @@
 //                     className="absolute opacity-0 cursor-pointer"
 //                   />
 //                   <div className="flex flex-col items-center text-center">
-//                     <UserCheck className="h-8 w-8 text-sky-600 mb-2" />
+//                     <UserCheck className="h-6 w-6 text-blue-600 mb-2" />
 //                     <Label className="cursor-pointer font-medium text-gray-700">
 //                       Find Jobs
 //                     </Label>
@@ -209,10 +189,10 @@
 //                   </div>
 //                 </div>
 //                 <div
-//                   className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
+//                   className={`border rounded-lg p-4 cursor-pointer transition-colors ${
 //                     input.role === "recruiter"
-//                       ? "border-sky-400 bg-sky-50"
-//                       : "border-gray-200 hover:border-sky-300 bg-white/50"
+//                       ? "border-blue-500 bg-blue-50"
+//                       : "border-gray-200 hover:border-gray-300"
 //                   }`}
 //                 >
 //                   <Input
@@ -224,7 +204,7 @@
 //                     className="absolute opacity-0 cursor-pointer"
 //                   />
 //                   <div className="flex flex-col items-center text-center">
-//                     <Users className="h-8 w-8 text-blue-600 mb-2" />
+//                     <Users className="h-6 w-6 text-blue-600 mb-2" />
 //                     <Label className="cursor-pointer font-medium text-gray-700">
 //                       Hire Talent
 //                     </Label>
@@ -238,15 +218,15 @@
 
 //             {/* Profile Picture */}
 //             <div className="mb-8">
-//               <Label className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-//                 <Upload className="h-4 w-4 text-sky-600" />
+//               <Label className="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
+//                 <Upload className="h-4 w-4 text-gray-500" />
 //                 Profile Picture (Optional)
 //               </Label>
 //               <div className="relative">
-//                 <div className="border-2 border-dashed border-gray-300 hover:border-sky-400 rounded-xl p-6 bg-white/50 transition-all duration-200 text-center">
+//                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
 //                   <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
 //                   <div className="text-sm text-gray-600 mb-2">
-//                     <span className="text-sky-600 font-medium cursor-pointer hover:text-sky-700">
+//                     <span className="text-blue-600 font-medium cursor-pointer">
 //                       Click to upload
 //                     </span>{" "}
 //                     or drag and drop
@@ -274,15 +254,15 @@
 //             {loading ? (
 //               <Button
 //                 disabled
-//                 className="w-full py-3 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105"
+//                 className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
 //               >
-//                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+//                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
 //                 Creating Account...
 //               </Button>
 //             ) : (
 //               <Button
 //                 type="submit"
-//                 className="w-full py-3 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+//                 className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
 //               >
 //                 Create Account
 //               </Button>
@@ -294,7 +274,7 @@
 //                 Already have an account?{" "}
 //                 <Link
 //                   to="/login"
-//                   className="text-sky-600 hover:text-sky-700 font-semibold hover:underline transition-all duration-200"
+//                   className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
 //                 >
 //                   Sign In
 //                 </Link>
@@ -309,7 +289,7 @@
 
 // export default Signup;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -341,12 +321,71 @@ const Signup = () => {
     role: "",
     file: "",
   });
-  const { loading } = useSelector((store) => store.auth);
+
+  const [errors, setErrors] = useState({
+    fullname: "",
+    phone: "",
+  });
+
+  const { user, loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Validation functions
+  const validateName = (name) => {
+    // Check if name is empty or only contains spaces
+    if (!name || name.trim() === "") {
+      return "Full name is required";
+    }
+
+    // Check if name contains only alphabetic characters and spaces
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    if (!nameRegex.test(name)) {
+      return "Name should contain only alphabetic characters";
+    }
+
+    return "";
+  };
+
+  const validatePhone = (phone) => {
+    // Check if phone is empty
+    if (!phone) {
+      return "Phone number is required";
+    }
+
+    // Check if phone contains only numeric characters
+    const phoneRegex = /^\d+$/;
+    if (!phoneRegex.test(phone)) {
+      return "Phone number should contain only numeric characters";
+    }
+
+    // Check if phone number is exactly 10 digits
+    if (phone.length !== 10) {
+      return "Phone number should be exactly 10 digits";
+    }
+
+    return "";
+  };
+
   const changeEventHandler = (e) => {
-    setinput({ ...input, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setinput({ ...input, [name]: value });
+
+    // Clear errors when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" });
+    }
+
+    // Real-time validation
+    if (name === "fullname") {
+      const nameError = validateName(value);
+      setErrors({ ...errors, fullname: nameError });
+    }
+
+    if (name === "phone") {
+      const phoneError = validatePhone(value);
+      setErrors({ ...errors, phone: phoneError });
+    }
   };
 
   const changeFileHandler = (e) => {
@@ -355,6 +394,26 @@ const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    // Validate all fields before submission
+    const nameError = validateName(input.fullname);
+    const phoneError = validatePhone(input.phone);
+
+    if (nameError || phoneError) {
+      setErrors({
+        fullname: nameError,
+        phone: phoneError,
+      });
+      toast.error("Please fix the validation errors");
+      return;
+    }
+
+    // Check if all required fields are filled
+    if (!input.email || !input.password || !input.role) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
@@ -364,6 +423,7 @@ const Signup = () => {
     if (input.file) {
       formData.append("file", input.file);
     }
+
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
@@ -378,10 +438,17 @@ const Signup = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Registration failed");
     } finally {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gray-50 overflow-x-hidden">
@@ -416,8 +483,13 @@ const Signup = () => {
                 name="fullname"
                 onChange={changeEventHandler}
                 placeholder="Enter your full name"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  errors.fullname ? "border-red-500" : "border-gray-300"
+                }`}
               />
+              {errors.fullname && (
+                <p className="text-red-500 text-sm mt-1">{errors.fullname}</p>
+              )}
             </div>
 
             {/* Email */}
@@ -447,9 +519,15 @@ const Signup = () => {
                 value={input.phone}
                 name="phone"
                 onChange={changeEventHandler}
-                placeholder="Enter your phone number"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter your 10-digit phone number"
+                maxLength={10}
+                className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  errors.phone ? "border-red-500" : "border-gray-300"
+                }`}
               />
+              {errors.phone && (
+                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+              )}
             </div>
 
             {/* Password */}

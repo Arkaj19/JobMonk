@@ -130,12 +130,22 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./shared/Navbar";
 import FilterCard from "./FilterCard";
 import Job from "./Job";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 const Jobs = () => {
   const { allJobs, searchedQuery } = useSelector((store) => store.job);
   const [filterJobs, setFilterJobs] = useState(allJobs);
+  // Version 1.3
+  const dispatch = useDispatch();
+
+  // Clear searchedQuery when component mounts to show all jobs initially
+  useEffect(() => {
+    dispatch(setSearchedQuery(""));
+  }, [dispatch]);
+
+  ///////////////////
 
   useEffect(() => {
     if (searchedQuery) {

@@ -1,6 +1,6 @@
 import { Application } from "../models/application.model.js"; // version 1.2
 import { Job } from "../models/job.model.js";
-
+import mongoose from "mongoose";
 //student
 export const postjob = async (req, res) => {
   try {
@@ -110,27 +110,105 @@ export const getjobsbyId = async (req, res) => {
 };
 
 //admin kitne job create
+// export const getAdminjobs = async (req, res) => {
+//   try {
+//     const adminId = req.id;
+//     const jobs = await Job.find({ created_by: adminId }).populate({
+//       path: "company",
+//       createdAt: -1,
+//     });
+//     if (!jobs) {
+//       return res.status(404).json({
+//         message: "Jobs not found",
+//         success: false,
+//       });
+//     }
+//     return res.status(200).json({
+//       jobs,
+//       success: true,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+//Verison 1.3
+//admin kitne job create
 export const getAdminjobs = async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ created_by: adminId }).populate({
-      path: "company",
-      createdAt: -1,
-    });
-    if (!jobs) {
-      return res.status(404).json({
-        message: "Jobs not found",
-        success: false,
+
+    // Use aggregation to get jobs with applicant counts
+    const jobs = await Job.aggregate([
+      // Match jobs created by this admin
+      {
+        $match: { created_by: new mongoose.Types.ObjectId(adminId) },
+      },
+      // Lookup applications for each job
+      {
+        $lookup: {
+          from: "applications",
+          localField: "_id",
+          foreignField: "job",
+          as: "applications",
+        },
+      },
+      // Add applicant count field
+      {
+        $addFields: {
+          applicantCount: { $size: "$applications" },
+        },
+      },
+      // Lookup company information
+      {
+        $lookup: {
+          from: "companies",
+          localField: "company",
+          foreignField: "_id",
+          as: "company",
+        },
+      },
+      // Unwind company array to object
+      {
+        $unwind: {
+          path: "$company",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      // Remove the applications array from output (we only need the count)
+      {
+        $project: {
+          applications: 0,
+        },
+      },
+      // Sort by creation date (newest first)
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
+
+    if (!jobs || jobs.length === 0) {
+      return res.status(200).json({
+        jobs: [],
+        success: true,
+        message: "No jobs found",
       });
     }
+
     return res.status(200).json({
       jobs,
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.log("Error fetching admin jobs:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
   }
 };
+
+///////////////// Verison 1.3 ends here ////////////////
 
 //version 1.2
 

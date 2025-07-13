@@ -11,13 +11,13 @@ const usegetallCompanies = () => {
   useEffect(() => {
     const fetchallCompanies = async () => {
       try {
-        console.log("Making API call to:", `${COMPANY_API_END_POINT}/get`); // Debug log
+        // console.log("Making API call to:", `${COMPANY_API_END_POINT}/get`); // Debug log
         const res = await axios.get(`${COMPANY_API_END_POINT}/get`, {
           withCredentials: true,
         });
-        console.log("API Response:", res.data); // Debug log
+        // console.log("API Response:", res.data); // Debug log
         if (res.data.success) {
-          console.log("Companies data:", res.data.companies); // Debug log
+          // console.log("Companies data:", res.data.companies); // Debug log
           dispatch(setCompanies(res.data.companies));
         }
       } catch (error) {

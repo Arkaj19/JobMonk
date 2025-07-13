@@ -228,7 +228,7 @@
 
 // export default Login;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -248,7 +248,7 @@ const Login = () => {
     password: "",
     role: "",
   });
-  const { loading } = useSelector((store) => store.auth);
+  const { user, loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -278,6 +278,13 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   };
+
+  // If user already logged dont allow to go to login page
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
